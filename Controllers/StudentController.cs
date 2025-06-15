@@ -1,42 +1,93 @@
-﻿using Basic_asp01.Models;
+﻿using Basic_asp01.Data;
+using Basic_asp01.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Basic_asp01.Controllers
 {
     public class StudentController : Controller
     {
+        private readonly ApplicationDBContext _db;
+
+        public StudentController(ApplicationDBContext db)
+        {
+            _db = db;
+        }
         public IActionResult Index()
         {
-            Student s1 = new Student();
-            s1.Id = 1;
-            s1.Name = "Test1";
-            s1.Score = 10;
+            IEnumerable<Student> allStudent = _db.Students;
 
-            var s2 = new Student();
-            s2.Id = 2;
-            s2.Name = "Test2";
-            s2.Score = 4;
-
-            Student s3 = new();
-            s3.Id = 3;
-            s3.Name = "Test3";
-            s3.Score = 7;
-
-            List<Student> allStudents = new List<Student>();
-            allStudents.Add(s1);
-            allStudents.Add(s2);
-            allStudents.Add(s3);
-
-           return View(allStudents);
+            return View(allStudent);
         }
 
-        public IActionResult Create ()
+        public IActionResult Create()
         {
             return View();
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Student obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Students.Add(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
+        }
+
+        public IActionResult Edit(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+         var obj =   _db.Students.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Student obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Students.Update(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var obj = _db.Students.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            _db.Students.Remove(obj);
+            _db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
         public IActionResult ShowScore (int id)
         {
             return View();
         }
+
     }
 }

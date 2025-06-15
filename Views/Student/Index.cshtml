@@ -1,18 +1,46 @@
-﻿@model IEnumerable<Basic_asp01.Models.Student>;
+﻿@model IEnumerable<Student>;
 @{
     ViewData["Title"] = "ໜ້າຫຼັກ";
 }
 
-<h1 class="text-center">ໜ້າຫຼັກ</h1>
+@if (Model.Count() > 0) {
+    <h1 class="text-center">ໜ້າຫຼັກ</h1>
 
-@foreach (var student in Model) {
-    <p>ລະຫັດນັກສຶກສາ : @student.Id</p>
-    <p>ຊື່ : @student.Name</p>
-    <p>ຄະແນນ : @student.Score</p>
-    @if (student.Score >= 5) {
-        <strong class="text-info">ສອບຜ່ານ</strong>
-    } else {
-        <strong class="text-danger">ສອບບໍ່ຜ່ານ</strong>
-    }
-    <hr />
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th>ລະຫັດນັກສຶກສາ</th>
+                <th>ຊື່ນັກສຶກສາ</th>
+                <th>ຄະແນນ</th>
+                <th>ແກ້ໄຂ</th>
+                <th>ລົບ</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Model)
+            {
+                <tr>
+                    <td>@student.Id</td>
+                    <td>@student.Name</td>
+                    <td>@student.Score</td>
+                    <td><a class="btn btn-warning" asp-controller="Student" asp-action="Edit" asp-route-id="@student.Id">ແກ້ໄຂ</a></td>
+                    <td><a class="btn btn-danger" asp-controller="Student" asp-action="Delete" asp-route-id="@student.Id" onclick="return confirm('ທ່ານຕ້ອງການໃຫ້ລົບ @student.Name ແທ້ ຫລື ບໍ່')">ລົບ</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+} else {
+    <div class="alert alert-secondary">ບໍ່ມີນັກສຶກສາໃນລະບົບ</div>
 }
+
+@* @foreach (var student in Model) { *@
+@*     <p>ລະຫັດນັກສຶກສາ : @student.Id</p> *@
+@*     <p>ຊື່ : @student.Name</p> *@
+@*     <p>ຄະແນນ : @student.Score</p> *@
+@*     @if (student.Score >= 50) { *@
+@*         <strong class="text-info">ສອບຜ່ານ</strong> *@
+@*     } else { *@
+@*         <strong class="text-danger">ສອບບໍ່ຜ່ານ</strong> *@
+@*     } *@
+@*     <hr /> *@
+@* } *@

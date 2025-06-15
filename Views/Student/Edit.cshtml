@@ -1,11 +1,11 @@
-﻿@model Student;
+﻿@model Student
 @{
-    ViewData["Title"] = "ບັນທືກຂໍ້ມູນ";
+    ViewData["Title"] = "ແກ້ໄຂຂໍ້ມູນ";
 }
 
-<h1 class="text-center">ບັນທືກຂໍ້ມູນ</h1>
+<h1 class="text-center">ແກ້ໄຂຂໍ້ມູນ</h1>
 
-<form method="POST" asp-controller="Student" asp-action="Create">
+<form method="POST" asp-controller="Student" asp-action="Edit">
     <div class="form-group">
         <label asp-for="Name"></label>
         <input type="text" asp-for="Name" class="form-control" />
@@ -17,5 +17,5 @@
         <span asp-validation-for="Score" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary my-2">ບັນທຶກ</button>
+    <button type="submit" class="btn btn-primary my-2">ແກ້ໄຂ</button>
 </form>
