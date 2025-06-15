@@ -1,0 +1,18 @@
+﻿@model IEnumerable<Basic_asp01.Models.Student>;
+@{
+    ViewData["Title"] = "ໜ້າຫຼັກ";
+}
+
+<h1 class="text-center">ໜ້າຫຼັກ</h1>
+
+@foreach (var student in Model) {
+    <p>ລະຫັດນັກສຶກສາ : @student.Id</p>
+    <p>ຊື່ : @student.Name</p>
+    <p>ຄະແນນ : @student.Score</p>
+    @if (student.Score >= 5) {
+        <strong class="text-info">ສອບຜ່ານ</strong>
+    } else {
+        <strong class="text-danger">ສອບບໍ່ຜ່ານ</strong>
+    }
+    <hr />
+}
